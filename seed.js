@@ -1,7 +1,23 @@
 //Insert Dummy Data into Database
+const mongoose = require('mongoose');
 const Product = require('./models/Product');
 
 
+mongoose
+  .connect(
+    "mongodb+srv://aggarwalprakhar0:jYSIsCSWoxaVfBeY@cluster0.y6axtbx.mongodb.net/",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+
+  .then(() => {
+    console.log("My db for E-Commerce is connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 
 const dummyData = [

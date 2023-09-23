@@ -73,6 +73,9 @@ app.use((req, res, next)=>{
 app.get('/',(req,res)=>{
     res.render('home')
 })
+app.get('/home',(req,res)=>{
+  res.render('home');
+})
 
 //-------------------------------------------------------->
 //-------------------product routes ---------------------->
