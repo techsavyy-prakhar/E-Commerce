@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce</title>
+    <link rel="website icon" type="png" href="https://cdn-icons-png.flaticon.com/512/712/712747.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/staribility.css">
+    <script src="https://kit.fontawesome.com/01ca816de2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <style>
+        .product-details{
+            display: flex;
+
+        }
+        .product-1{
+            margin-left: 20px;
+            margin-top: 20px;
+            max-height: 90%;
+        }
+        .product-2{
+            margin-left: 20px;
+            margin-top: 5px;
+            width: 100%;
+            
+            
+            
+            max-height: 90%;
+        }
+        .price-details{
+            display: flex;
+            
+        }
+        .list-item {
+            
+            margin-right: 20px;
+            padding: auto 20px 20px;
+            list-style: none;
+            background-image: url("https://rukminim2.flixcart.com/www/36/36/promos/06/09/2016/c22c9fc4-0555-4460-8401-bf5c28d7ba29.png?q=90");
+            background-repeat: no-repeat;
+            background-size: 20px;
+            padding-left: 30px; /* Add padding for the list marker */
+        }
+        .list-items{
+            margin-top: 20px;
+            padding-left: 3px; /* Add padding to move the entire list to the left */
+        }
+        
+        .stars{
+            margin-top: 15px;
+        }
+
+        
+       
+        
+    </style>
+</head>
+<body>
+    <div class="outer-div">
+        <header>
+            <%- include('../partials/navbar') %>
+        </header>
+            <%- include('../partials/flash') %>
+        <div class="product-details">
+            <div class="product-1">
+                <div class="card" style="width: 35rem;">
+                    <img style="max-width: 100%; max-height: 60%;" src="<%= products.Image %>" class="card-img-top" alt="...">
+                    <div class="card-body mt-10 d-flex flex-column gap-2">
+                        <a href="#" id="buy-btn" class="btn btn-outline-success">Buy Now</a>
+
+                        <a id="add-to-cart" product-id="<%= products._id %>" class="btn btn-block btn-primary">Add to Cart</a>    
+                                          
+                        <% if(currentUser && currentUser.role==='seller'){ %>
+                            <a href="../products/<%= products._id %>/edit" class="btn btn-block btn-primary ">Edit</a>
+                            <form class="d-grid gap-2" action="/products/<%= products._id %>?_method=DELETE" method="post">
+                                <button class="btn btn-block btn-outline-danger">Delete</button>
+                            </form>
+                        <% } %>
+
+
+                    </div>
+                </div> 
+            </div>
+            <div class="product-2">
+                <br>
+                <h5><%= products.Name %> - <%= products.Description %></h5>
+                <br>
+                <h3 style="color:  green;">Special Price</h3>
+                <div class="price-details">
+                    <h3  id="amount-display" >$ <%= products.Price %> </h3>
+                    <h6 style="margin-left: 10px; margin-top: 10px; text-decoration: line-through;">$<%= products.Price+0.1*products.Price %></h6>
+                    <h6 style="color: green;  margin-left: 10px; margin-top: 10px;"><%= 10 %>% Off</h6>
+                </div>
+                <div class="offer-details">
+                    <h4 style="margin-top: 20px;">Available Offers</h4>
+                    <ul class="list-items">
+                        <li class="list-item"> Special PriceGet extra 9% off (price inclusive of cashback/coupon)</li>
+                        <li class="list-item"> Partner OfferPurchase now & get 1 surprise cashback coupon in Future</li>
+                        <li class="list-item"> Bank Offer10% Instant Discount on ICICI Bank Credit Card Txns, up to ₹1,250 on orders of ₹5,000 and above</li>
+                    </ul>
+                </div>
+                <br>
+                <div class="rating">
+                    <h3>Give your Rating out of 5 </h3>
+                    <div style="margin-top: 20px;" class="rating-user">
+                        <form action="/products/<%= products._id %>/review" method="POST">
+                            <fieldset class="starability-basic">
+                                <legend>First rating:</legend>
+                                <input type="radio" id="first-rate1" name="Rating" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="Rating" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="Rating" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="Rating" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="Rating" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                            <br><br>
+                            <textarea style="width: 50%;" name="Comment" id="" cols="45" rows="3"></textarea>
+                            <br>
+                            <button class="btn btn-sm btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="rating-card">
+                    <% for( let review of products.Reviews ) { %>
+                        <div class="card w-50">
+                            <div class="card-body">
+                              <h5 class="card-title"><%= review.Rating %></h5>
+                              <p class="card-text"><%= review.Comment %></p>
+                              <!-- <button>Delete</button> -->
+                              <form action="" method="">
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                              </form>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </main>
+            
+        </div>
+        
+    </div>
+    <script src="/js/cart.js"></script>
+    <script src="/js/validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/payment.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,23 @@
+/* Reset some default margin and padding */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Apply a flexbox layout to the body to push the footer to the bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes at least the viewport's height */
+}
+
+/* Style your footer */
+.footer {
+    background-color: #333; /* Adjust the color as needed */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+}

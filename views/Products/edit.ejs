@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce</title>
+    <link rel="website icon" type="png" href="https://cdn-icons-png.flaticon.com/512/712/712747.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div class="outer-div">
+        <header>
+            <%- include('../partials/navbar') %>
+        </header>
+        <form action="/products/<%= products[0]._id %>?_method=PATCH" method="POST"  class="mx-auto p-4 needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="exampleInputName" class="form-label">Name of the Product :</label>
+              <input required value="<%= products[0].Name %>" name="Name"  type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div class="invalid-feedback">
+                Please add the Name of the Product
+              </div>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputImage" class="form-label">Image URL :</label>
+              <input required value="<%= products[0].Image %>"  name="Image" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div class="invalid-feedback">
+                Please add the Image Link 
+              </div>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPrice" class="form-label">Price :</label>
+              <div class="input-group">
+                <div class="input-group-text" id="btnGroupAddon">$</div>
+                <input  required value="<%= products[0].Price %>" name="Price" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <div class="invalid-feedback">
+                  The Price can't be negative
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              
+    
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputDescription" class="form-label">Description :</label>
+              <input required value="<%= products[0].Description %>"name="Description" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div class="invalid-feedback">
+                Please provide a valid Description
+              </div>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+    <script src="/js/validation.js"></script>
+    <script>"https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    </script>
+    
+</body>
+</html>
